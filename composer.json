@@ -1,0 +1,36 @@
+{
+  "name": "voskobovich/yii2-rest-actions",
+  "description": "Implement custom rest actions for your api by Yii2",
+  "keywords": [
+    "action",
+    "rest",
+    "api",
+    "yii2"
+  ],
+  "homepage": "https://github.com/voskobovich/yii2-rest-actions",
+  "type": "yii2-actions",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/voskobovich/yii2-rest-actions/issues",
+    "source": "https://github.com/voskobovich/yii2-rest-actions"
+  },
+  "authors": [
+    {
+      "name": "Vitaly Voskobovich",
+      "email": "vitaly@voskobovich.com",
+      "homepage": "http://voskobovich.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.4.0",
+    "yiisoft/yii2": "*",
+    "voskobovich/yii2-collection-provider": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "voskobovich\\rest\\base\\actions\\": "actions",
+      "voskobovich\\rest\\base\\forms\\": "forms"
+    }
+  }
+}

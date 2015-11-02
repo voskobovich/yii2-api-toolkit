@@ -1,0 +1,21 @@
+Yii2 Rest Actions
+================================
+
+Installation
+------------
+
+The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+
+Either run
+
+```
+php composer require --prefer-dist voskobovich/yii2-rest-actions "*"
+```
+
+or add
+
+```
+"voskobovich/yii2-rest-actions": "*"
+```
+
+to the require section of your `composer.json` file.
