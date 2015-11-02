@@ -20,7 +20,7 @@ abstract class IndexFormAbstract extends Model
 
     /**
      * Query building
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     abstract public function buildQuery();
 }
