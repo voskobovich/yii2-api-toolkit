@@ -6,6 +6,7 @@ use voskobovich\rest\base\forms\IndexFormAbstract;
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
+use yii\data\ActiveDataProvider;
 use yii\rest\Action;
 
 
@@ -22,30 +23,22 @@ class IndexAction extends Action
     public $formClass;
 
     /**
-     * @var integer max limit value.
-     */
-    public $maxLimit = 1000;
-
-    /**
-     * @var string class name of the provider.
-     * This property must be set.
-     */
-    public $providerClass = '\yii\data\ActiveDataProvider';
-
-    /**
-     * @var callable a PHP callable that will be called to prepare a CollectionProvider that
-     * should return a collection of the models. If not set, [[prepareCollectionProvider()]] will be used instead.
-     * The signature of the callable should be:
+     * @var callable a PHP callable that will be called to prepare a data provider that
      *
      * ```php
-     * function ($action) {
-     *     // $action is the action object currently running
+     * function ($form) {
+     *     return new ActiveDataProvider([
+     *         'query' => $form->buildQuery(),
+     *         'sort' => [
+     *             ...
+     *         ]
+     *     ]);
      * }
      * ```
      *
-     * The callable should return an CollectionProvider object.
+     * The callable should return an Component object.
      */
-    public $prepareCollectionProvider;
+    public $prepareProvider;
 
     /**
      * @return Component
@@ -66,10 +59,6 @@ class IndexAction extends Action
      */
     protected function prepareProvider()
     {
-        if ($this->prepareCollectionProvider !== null) {
-            return call_user_func($this->prepareCollectionProvider, $this);
-        }
-
         $params = Yii::$app->request->get();
 
         /* @var $formClass \yii\base\Model */
@@ -89,9 +78,12 @@ class IndexAction extends Action
             return $form;
         }
 
-        return new $this->providerClass([
+        if ($this->prepareProvider !== null) {
+            return call_user_func($this->prepareProvider, $form);
+        }
+
+        return new ActiveDataProvider([
             'query' => $form->buildQuery(),
-            'maxLimit' => $this->maxLimit
         ]);
     }
 }

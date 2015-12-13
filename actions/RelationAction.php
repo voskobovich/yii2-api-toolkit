@@ -6,6 +6,7 @@ use voskobovich\rest\base\forms\RelationFormAbstract;
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
+use yii\data\ActiveDataProvider;
 use yii\rest\Action;
 
 
@@ -22,30 +23,22 @@ class RelationAction extends Action
     public $formClass;
 
     /**
-     * @var integer max limit value.
-     */
-    public $maxLimit = 1000;
-
-    /**
-     * @var string class name of the provider.
-     * This property must be set.
-     */
-    public $providerClass = '\yii\data\ActiveDataProvider';
-
-    /**
-     * @var callable a PHP callable that will be called to prepare a CollectionProvider that
-     * should return a collection of the models. If not set, [[prepareCollectionProvider()]] will be used instead.
-     * The signature of the callable should be:
+     * @var callable a PHP callable that will be called to prepare a data provider that
      *
      * ```php
-     * function ($action) {
-     *     // $action is the action object currently running
+     * function ($form) {
+     *     return new ActiveDataProvider([
+     *         'query' => $form->buildQuery(),
+     *         'sort' => [
+     *             ...
+     *         ]
+     *     ]);
      * }
      * ```
      *
-     * The callable should return an CollectionProvider object.
+     * The callable should return an Component object.
      */
-    public $prepareCollectionProvider;
+    public $prepareProvider;
 
     /**
      * @param $id
@@ -58,7 +51,7 @@ class RelationAction extends Action
             call_user_func($this->checkAccess, $this->id, $model);
         }
 
-        return $this->prepareCollectionProvider($model);
+        return $this->prepareProvider($model);
     }
 
     /**
@@ -67,12 +60,8 @@ class RelationAction extends Action
      * @return array
      * @throws InvalidConfigException
      */
-    protected function prepareCollectionProvider($model)
+    protected function prepareProvider($model)
     {
-        if ($this->prepareCollectionProvider !== null) {
-            return call_user_func($this->prepareCollectionProvider, $this, $model);
-        }
-
         $params = Yii::$app->request->get();
 
         /* @var $formClass \yii\base\Model */
@@ -89,9 +78,12 @@ class RelationAction extends Action
             return $form;
         }
 
-        return new $this->providerClass([
-            'query' => $form->buildQuery(),
-            'maxLimit' => $this->maxLimit
+        if ($this->prepareProvider !== null) {
+            return call_user_func($this->prepareProvider, $form);
+        }
+
+        return new ActiveDataProvider([
+            'query' => $form->buildQuery()
         ]);
     }
 }
