@@ -26,7 +26,7 @@ class RelationAction extends Action
      * @var callable a PHP callable that will be called to prepare a data provider that
      *
      * ```php
-     * function ($form) {
+     * function ($form, $action) {
      *     return new ActiveDataProvider([
      *         'query' => $form->buildQuery(),
      *         'sort' => [
