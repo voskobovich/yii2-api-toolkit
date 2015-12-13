@@ -79,7 +79,7 @@ class IndexAction extends Action
         }
 
         if ($this->prepareProvider !== null) {
-            return call_user_func($this->prepareProvider, $form);
+            return call_user_func($this->prepareProvider, $form, $this);
         }
 
         return new ActiveDataProvider([
