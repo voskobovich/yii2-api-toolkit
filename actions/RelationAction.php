@@ -2,9 +2,9 @@
 
 namespace voskobovich\rest\base\actions;
 
-use voskobovich\data\CollectionProvider;
 use voskobovich\rest\base\forms\RelationFormAbstract;
 use Yii;
+use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\rest\Action;
 
@@ -27,6 +27,12 @@ class RelationAction extends Action
     public $maxLimit = 1000;
 
     /**
+     * @var string class name of the provider.
+     * This property must be set.
+     */
+    public $providerClass = '\yii\data\ActiveDataProvider';
+
+    /**
      * @var callable a PHP callable that will be called to prepare a CollectionProvider that
      * should return a collection of the models. If not set, [[prepareCollectionProvider()]] will be used instead.
      * The signature of the callable should be:
@@ -43,7 +49,7 @@ class RelationAction extends Action
 
     /**
      * @param $id
-     * @return CollectionProvider
+     * @return Component
      */
     public function run($id)
     {
@@ -83,7 +89,7 @@ class RelationAction extends Action
             return $form;
         }
 
-        return new CollectionProvider([
+        return new $this->providerClass([
             'query' => $form->buildQuery(),
             'maxLimit' => $this->maxLimit
         ]);

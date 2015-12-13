@@ -2,9 +2,9 @@
 
 namespace voskobovich\rest\base\actions;
 
-use voskobovich\data\CollectionProvider;
 use voskobovich\rest\base\forms\IndexFormAbstract;
 use Yii;
+use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\rest\Action;
 
@@ -27,6 +27,12 @@ class IndexAction extends Action
     public $maxLimit = 1000;
 
     /**
+     * @var string class name of the provider.
+     * This property must be set.
+     */
+    public $providerClass = '\yii\data\ActiveDataProvider';
+
+    /**
      * @var callable a PHP callable that will be called to prepare a CollectionProvider that
      * should return a collection of the models. If not set, [[prepareCollectionProvider()]] will be used instead.
      * The signature of the callable should be:
@@ -42,7 +48,7 @@ class IndexAction extends Action
     public $prepareCollectionProvider;
 
     /**
-     * @return CollectionProvider
+     * @return Component
      */
     public function run()
     {
@@ -50,7 +56,7 @@ class IndexAction extends Action
             call_user_func($this->checkAccess, $this->id);
         }
 
-        return $this->prepareCollectionProvider();
+        return $this->prepareProvider();
     }
 
     /**
@@ -58,7 +64,7 @@ class IndexAction extends Action
      * @return array
      * @throws InvalidConfigException
      */
-    protected function prepareCollectionProvider()
+    protected function prepareProvider()
     {
         if ($this->prepareCollectionProvider !== null) {
             return call_user_func($this->prepareCollectionProvider, $this);
@@ -83,7 +89,7 @@ class IndexAction extends Action
             return $form;
         }
 
-        return new CollectionProvider([
+        return new $this->providerClass([
             'query' => $form->buildQuery(),
             'maxLimit' => $this->maxLimit
         ]);
