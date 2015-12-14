@@ -1,6 +1,6 @@
 <?php
 
-namespace voskobovich\rest\base\filters;
+namespace voskobovich\rest\filters;
 
 use Yii;
 use yii\web\UnauthorizedHttpException;
