@@ -3,8 +3,6 @@
 namespace voskobovich\rest\base\forms;
 
 use yii\base\Model;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 
 /**
@@ -15,8 +13,8 @@ abstract class RelationFormAbstract extends Model
 {
     /**
      * Query building
-     * @param ActiveRecord $model
-     * @return ActiveQuery
+     * @param \yii\db\ActiveRecord $model
+     * @return \yii\db\ActiveQuery
      */
-    abstract public function buildQuery(ActiveRecord $model);
+    abstract public function buildQuery($model);
 }
