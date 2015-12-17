@@ -35,8 +35,10 @@ class UpdateAction extends Action
             call_user_func($this->checkAccess, $this->id, $model);
         }
 
-        $model->scenario = $this->scenario;
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        $model->setScenario($this->scenario);
+
+        $params = Yii::$app->getRequest()->getBodyParams();
+        $model->load($params, '');
 
         $validate = Yii::$app->request->get('validate', false);
         if (!$validate) {

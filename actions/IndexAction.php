@@ -64,8 +64,6 @@ class IndexAction extends Action
      */
     protected function prepareProvider($model)
     {
-        $params = Yii::$app->request->get();
-
         /* @var $form IndexFormAbstract */
         $form = new $this->formClass();
 
@@ -73,7 +71,8 @@ class IndexAction extends Action
             throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\rest\base\forms\IndexFormAbstract"');
         }
 
-        $form->setAttributes($params);
+        $params = Yii::$app->getRequest()->get();
+        $form->load($params, '');
 
         if (!$form->validate()) {
             return $form;

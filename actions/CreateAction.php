@@ -41,7 +41,8 @@ class CreateAction extends Action
             'scenario' => $this->scenario,
         ]);
 
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        $params = Yii::$app->getRequest()->getBodyParams();
+        $model->load($params, '');
 
         $validate = Yii::$app->request->get('validate', false);
         if (!$validate) {

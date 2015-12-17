@@ -63,15 +63,14 @@ class RelationAction extends Action
      */
     protected function prepareProvider($model)
     {
-        $params = Yii::$app->request->get();
-
         /* @var $form RelationFormAbstract */
         $form = new $this->formClass;
         if (!$form instanceof RelationFormAbstract) {
             throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\rest\base\forms\RelationFormAbstract"');
         }
 
-        $form->setAttributes($params);
+        $params = Yii::$app->getRequest()->get();
+        $form->load($params, '');
 
         if (!$form->validate()) {
             return $form;
