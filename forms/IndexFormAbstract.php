@@ -4,6 +4,7 @@ namespace voskobovich\rest\base\forms;
 
 use yii\base\Model;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 
 /**
@@ -13,14 +14,9 @@ use yii\db\ActiveQuery;
 abstract class IndexFormAbstract extends Model
 {
     /**
-     * ActiveQuery Object
-     * @var ActiveQuery
-     */
-    public $query;
-
-    /**
      * Query building
+     * @param ActiveRecord $model
      * @return ActiveQuery
      */
-    abstract public function buildQuery();
+    abstract public function buildQuery(ActiveRecord $model);
 }

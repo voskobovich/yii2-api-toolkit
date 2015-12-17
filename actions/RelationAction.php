@@ -26,9 +26,9 @@ class RelationAction extends Action
      * @var callable a PHP callable that will be called to prepare a data provider that
      *
      * ```php
-     * function ($form, $action) {
+     * function ($form, $model, $action) {
      *     return new ActiveDataProvider([
-     *         'query' => $form->buildQuery(),
+     *         'query' => $form->buildQuery($model),
      *         'sort' => [
      *             ...
      *         ]
@@ -47,6 +47,7 @@ class RelationAction extends Action
     public function run($id)
     {
         $model = $this->findModel($id);
+
         if ($this->checkAccess) {
             call_user_func($this->checkAccess, $this->id, $model);
         }
@@ -64,14 +65,12 @@ class RelationAction extends Action
     {
         $params = Yii::$app->request->get();
 
-        /* @var $formClass \yii\base\Model */
-        $formClass = $this->formClass;
-        if (!$formClass instanceof RelationFormAbstract) {
+        /* @var $form RelationFormAbstract */
+        $form = new $this->formClass;
+        if (!$form instanceof RelationFormAbstract) {
             throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\rest\base\forms\RelationFormAbstract"');
         }
 
-        /* @var $form RelationFormAbstract */
-        $form = new $formClass(['model' => $model]);
         $form->setAttributes($params);
 
         if (!$form->validate()) {
@@ -79,11 +78,11 @@ class RelationAction extends Action
         }
 
         if ($this->prepareProvider !== null) {
-            return call_user_func($this->prepareProvider, $form, $this);
+            return call_user_func($this->prepareProvider, $form, $model, $this);
         }
 
         return new ActiveDataProvider([
-            'query' => $form->buildQuery()
+            'query' => $form->buildQuery($model)
         ]);
     }
 }

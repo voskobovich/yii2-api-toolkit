@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
 use yii\rest\Action;
 
 
@@ -26,9 +27,9 @@ class IndexAction extends Action
      * @var callable a PHP callable that will be called to prepare a data provider that
      *
      * ```php
-     * function ($form, $action) {
+     * function ($form, $model, $action) {
      *     return new ActiveDataProvider([
-     *         'query' => $form->buildQuery(),
+     *         'query' => $form->buildQuery($model),
      *         'sort' => [
      *             ...
      *         ]
@@ -49,29 +50,29 @@ class IndexAction extends Action
             call_user_func($this->checkAccess, $this->id);
         }
 
-        return $this->prepareProvider();
+        /** @var \yii\db\ActiveRecord $model */
+        $model = new $this->modelClass;
+
+        return $this->prepareProvider($model);
     }
 
     /**
      * Prepares the data provider that should return the requested collection of the models.
+     * @param ActiveRecord $model
      * @return array
      * @throws InvalidConfigException
      */
-    protected function prepareProvider()
+    protected function prepareProvider($model)
     {
         $params = Yii::$app->request->get();
 
-        /* @var $formClass \yii\base\Model */
-        $formClass = $this->formClass;
-        if (!$formClass instanceof IndexFormAbstract) {
+        /* @var $form IndexFormAbstract */
+        $form = new $this->formClass();
+
+        if (!$form instanceof IndexFormAbstract) {
             throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\rest\base\forms\IndexFormAbstract"');
         }
 
-        /* @var $modelClass \yii\db\BaseActiveRecord */
-        $modelClass = $this->modelClass;
-
-        /* @var $form IndexFormAbstract */
-        $form = new $formClass(['query' => $modelClass::find()]);
         $form->setAttributes($params);
 
         if (!$form->validate()) {
@@ -79,11 +80,14 @@ class IndexAction extends Action
         }
 
         if ($this->prepareProvider !== null) {
-            return call_user_func($this->prepareProvider, $form, $this);
+            return call_user_func($this->prepareProvider, $form, $model, $this);
         }
 
+        /* @var $modelClass \yii\db\BaseActiveRecord */
+        $model = new $this->modelClass;
+
         return new ActiveDataProvider([
-            'query' => $form->buildQuery(),
+            'query' => $form->buildQuery($model),
         ]);
     }
 }
