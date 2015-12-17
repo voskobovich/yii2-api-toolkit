@@ -3,14 +3,15 @@
 namespace voskobovich\rest\filters;
 
 use Yii;
+use yii\base\Object;
 use yii\web\UnauthorizedHttpException;
 
 
 /**
- * Class ActionAccessControl
+ * Class AccessActionControl
  * @package voskobovich\rest\base\filters
  */
-class ActionAccessControl
+class AccessActionControl extends Object
 {
     /**
      * @param $permName
