@@ -28,9 +28,9 @@
   },
   "autoload": {
     "psr-4": {
-      "voskobovich\\rest\\base\\actions\\": "actions",
-      "voskobovich\\rest\\base\\forms\\": "forms",
-      "voskobovich\\rest\\filters\\": "filters"
+      "voskobovich\\rest\\base\\actions\\": "src/actions",
+      "voskobovich\\rest\\base\\forms\\": "src/forms",
+      "voskobovich\\rest\\filters\\": "src/filters"
     }
   }
 }

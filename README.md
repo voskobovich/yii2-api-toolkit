@@ -9,13 +9,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer require --prefer-dist voskobovich/yii2-rest-actions "*"
+php composer require --prefer-dist voskobovich/yii2-rest-actions "~1.0"
 ```
 
 or add
 
 ```
-"voskobovich/yii2-rest-actions": "*"
+"voskobovich/yii2-rest-actions": "~1.0"
 ```
 
 to the require section of your `composer.json` file.
