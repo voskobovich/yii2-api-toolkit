@@ -14,7 +14,7 @@ use yii\rest\Controller;
 class AccessController extends Controller
 {
     /**
-     * The list of actions not needing protection.
+     * The list of actions not needing token protection.
      * @var array
      */
     public $unsecuredActions = [];
