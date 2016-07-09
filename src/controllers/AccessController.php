@@ -26,14 +26,10 @@ class AccessController extends Controller
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'authMethods' => [
-                [
-                    'class' => QueryParamAuth::className(),
-                    'exceptActions' => $this->unsecuredActions,
-                    'tokenParam' => 'token'
-                ]
-            ]
+        $behaviors['authenticator']['authMethods'] = [
+            'class' => QueryParamAuth::className(),
+            'exceptActions' => $this->unsecuredActions,
+            'tokenParam' => 'token'
         ];
         return $behaviors;
     }
