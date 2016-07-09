@@ -1,6 +1,6 @@
 <?php
 
-namespace voskobovich\rest\filters;
+namespace voskobovich\api\filters;
 
 use Yii;
 use yii\base\Object;
@@ -9,7 +9,7 @@ use yii\web\UnauthorizedHttpException;
 
 /**
  * Class AccessActionControl
- * @package voskobovich\rest\base\filters
+ * @package voskobovich\api\filters
  */
 class AccessActionControl extends Object
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace voskobovich\rest\base\forms;
+namespace voskobovich\api\forms;
 
 use yii\base\Model;
 
 
 /**
  * Class RelationFormAbstract
- * @package voskobovich\rest\base\forms
+ * @package voskobovich\api\forms
  */
 abstract class RelationFormAbstract extends Model
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace voskobovich\rest\base\actions;
+namespace voskobovich\api\actions;
 
-use voskobovich\rest\base\forms\RelationFormAbstract;
+use voskobovich\api\forms\RelationFormAbstract;
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
@@ -12,7 +12,7 @@ use yii\rest\Action;
 
 /**
  * Class RelationAction
- * @package voskobovich\rest\base\actions
+ * @package voskobovich\api\actions
  */
 class RelationAction extends Action
 {
@@ -66,7 +66,7 @@ class RelationAction extends Action
         /* @var $form RelationFormAbstract */
         $form = new $this->formClass;
         if (!$form instanceof RelationFormAbstract) {
-            throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\rest\base\forms\RelationFormAbstract"');
+            throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\api\forms\RelationFormAbstract"');
         }
 
         $params = Yii::$app->getRequest()->get();

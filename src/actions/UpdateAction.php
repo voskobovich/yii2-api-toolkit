@@ -1,6 +1,6 @@
 <?php
 
-namespace voskobovich\rest\base\actions;
+namespace voskobovich\api\actions;
 
 use Yii;
 use yii\base\Model;
@@ -11,7 +11,7 @@ use yii\web\ServerErrorHttpException;
 
 /**
  * Class UpdateAction
- * @package voskobovich\rest\base\actions
+ * @package voskobovich\api\actions
  */
 class UpdateAction extends Action
 {

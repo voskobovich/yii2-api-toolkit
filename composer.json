@@ -1,18 +1,18 @@
 {
-  "name": "voskobovich/yii2-rest-actions",
-  "description": "Implement custom rest actions for your api by Yii2",
+  "name": "voskobovich/yii2-api-toolkit",
+  "description": "New level create API on Yii 2 Framework. Speed, security, flexibility!",
   "keywords": [
-    "action",
+    "crud",
     "rest",
     "api",
     "yii2"
   ],
-  "homepage": "https://github.com/voskobovich/yii2-rest-actions",
-  "type": "yii2-actions",
+  "homepage": "https://github.com/voskobovich/yii2-api-toolkit",
+  "type": "yii2-toolkit",
   "license": "MIT",
   "support": {
-    "issues": "https://github.com/voskobovich/yii2-rest-actions/issues",
-    "source": "https://github.com/voskobovich/yii2-rest-actions"
+    "issues": "https://github.com/voskobovich/yii2-api-toolkit/issues",
+    "source": "https://github.com/voskobovich/yii2-api-toolkit"
   },
   "authors": [
     {
@@ -27,9 +27,10 @@
   },
   "autoload": {
     "psr-4": {
-      "voskobovich\\rest\\base\\actions\\": "src/actions",
-      "voskobovich\\rest\\base\\forms\\": "src/forms",
-      "voskobovich\\rest\\filters\\": "src/filters"
+      "voskobovich\\api\\controllers\\": "src/controllers",
+      "voskobovich\\api\\actions\\": "src/actions",
+      "voskobovich\\api\\forms\\": "src/forms",
+      "voskobovich\\api\\filters\\auth\\": "src/filters/auth"
     }
   }
 }

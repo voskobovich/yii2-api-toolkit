@@ -1,8 +1,8 @@
 <?php
 
-namespace voskobovich\rest\base\actions;
+namespace voskobovich\api\actions;
 
-use voskobovich\rest\base\forms\IndexFormAbstract;
+use voskobovich\api\forms\IndexFormAbstract;
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
@@ -13,7 +13,7 @@ use yii\rest\Action;
 
 /**
  * Class IndexAction
- * @package voskobovich\rest\base\actions
+ * @package voskobovich\api\actions
  */
 class IndexAction extends Action
 {
@@ -68,7 +68,7 @@ class IndexAction extends Action
         $form = new $this->formClass();
 
         if (!$form instanceof IndexFormAbstract) {
-            throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\rest\base\forms\IndexFormAbstract"');
+            throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\api\forms\IndexFormAbstract"');
         }
 
         $params = Yii::$app->getRequest()->get();

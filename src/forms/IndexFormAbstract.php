@@ -1,13 +1,13 @@
 <?php
 
-namespace voskobovich\rest\base\forms;
+namespace voskobovich\api\forms;
 
 use yii\base\Model;
 
 
 /**
  * Class IndexFormAbstract
- * @package voskobovich\rest\base\forms
+ * @package voskobovich\api\forms
  */
 abstract class IndexFormAbstract extends Model
 {
