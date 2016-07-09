@@ -8,7 +8,7 @@ use yii\web\UnauthorizedHttpException;
 
 /**
  * Class QueryParamAuth
- * @package api\filters\auth
+ * @package voskobovich\api\filters\auth
  */
 class QueryParamAuth extends \yii\filters\auth\QueryParamAuth
 {
