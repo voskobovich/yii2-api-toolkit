@@ -17,8 +17,8 @@ class QueryParamAuth extends \yii\filters\auth\QueryParamAuth
      */
     public function authenticate($user, $request, $response)
     {
-        $accessToken = $request->get($this->tokenParam, null);
-        if ($accessToken == null) {
+        $accessToken = $request->get($this->tokenParam);
+        if (!is_string($accessToken)) {
             throw new UnauthorizedHttpException('You are requesting with an invalid credential.');
         }
 
