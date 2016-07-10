@@ -3,7 +3,6 @@
 namespace voskobovich\api\filters\auth;
 
 use Yii;
-use yii\web\UnauthorizedHttpException;
 
 
 /**
@@ -19,9 +18,14 @@ class QueryParamAuth extends \yii\filters\auth\QueryParamAuth
     {
         $accessToken = $request->get($this->tokenParam);
         if (!is_string($accessToken)) {
-            throw new UnauthorizedHttpException('You are requesting with an invalid credential.');
+            $this->handleFailure($response);
         }
 
-        $user->loginByAccessToken($accessToken, get_class($this));
+        $identity = $user->loginByAccessToken($accessToken, get_class($this));
+        if ($identity !== null) {
+            return $identity;
+        }
+
+        return null;
     }
 }
