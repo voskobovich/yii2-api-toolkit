@@ -5,13 +5,13 @@ namespace voskobovich\api\actions;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
-use yii\rest\Action;
 use yii\web\ServerErrorHttpException;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * Class UpdateAction.
  */
-class UpdateAction extends Action
+class UpdateAction extends BaseAction
 {
     /**
      * @var string the scenario to be assigned to the model before it is validated and updated
@@ -23,18 +23,19 @@ class UpdateAction extends Action
      *
      * @param string $id the primary key of the model
      *
-     * @throws ServerErrorHttpException if there is any error when updating the model
+     * @throws ServerErrorHttpException  if there is any error when updating the model
+     * @throws UnauthorizedHttpException
      *
-     * @return \yii\db\ActiveRecord the model being updated
+     * @return ActiveRecord if there is any error when updating the model
      */
     public function run($id)
     {
         /* @var $model ActiveRecord */
         $model = $this->findModel($id);
 
-        if ($this->checkAccess) {
-            call_user_func($this->checkAccess, $this->id, $model);
-        }
+        $this->runAccessControl([
+            'model' => $model,
+        ]);
 
         $model->setScenario($this->scenario);
 

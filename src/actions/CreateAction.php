@@ -5,13 +5,13 @@ namespace voskobovich\api\actions;
 use Yii;
 use yii\base\Model;
 use yii\helpers\Url;
-use yii\rest\Action;
 use yii\web\ServerErrorHttpException;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * Class CreateAction.
  */
-class CreateAction extends Action
+class CreateAction extends BaseAction
 {
     /**
      * @var string the scenario to be assigned to the new model before it is validated and saved
@@ -26,15 +26,14 @@ class CreateAction extends Action
     /**
      * Creates a new model.
      *
-     * @throws ServerErrorHttpException if there is any error when creating the model
+     * @throws ServerErrorHttpException  if there is any error when creating the model
+     * @throws UnauthorizedHttpException
      *
-     * @return \yii\db\ActiveRecord the model newly created
+     * @return \yii\db\ActiveRecord if there is any error when creating the model
      */
     public function run()
     {
-        if ($this->checkAccess) {
-            call_user_func($this->checkAccess, $this->id);
-        }
+        $this->runAccessControl();
 
         /* @var $model \yii\db\ActiveRecord */
         $model = Yii::createObject(

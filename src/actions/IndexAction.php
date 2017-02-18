@@ -7,12 +7,12 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecordInterface;
-use yii\rest\Action;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * Class IndexAction.
  */
-class IndexAction extends Action
+class IndexAction extends BaseAction
 {
     /**
      * @var string class name of the form which will be handled by this action.
@@ -39,13 +39,13 @@ class IndexAction extends Action
     public $prepareProvider;
 
     /**
+     * @throws UnauthorizedHttpException
+     *
      * @return array
      */
     public function run()
     {
-        if ($this->checkAccess) {
-            call_user_func($this->checkAccess, $this->id);
-        }
+        $this->runAccessControl();
 
         /** @var \yii\db\ActiveRecord $model */
         $model = Yii::createObject($this->modelClass);

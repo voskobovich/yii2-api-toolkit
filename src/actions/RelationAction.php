@@ -7,12 +7,12 @@ use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
-use yii\rest\Action;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * Class RelationAction.
  */
-class RelationAction extends Action
+class RelationAction extends BaseAction
 {
     /**
      * @var string class name of the form which will be handled by this action.
@@ -41,6 +41,8 @@ class RelationAction extends Action
     /**
      * @param $id
      *
+     * @throws UnauthorizedHttpException
+     *
      * @return Component
      */
     public function run($id)
@@ -48,9 +50,9 @@ class RelationAction extends Action
         /** @var \yii\db\ActiveRecord $model */
         $model = $this->findModel($id);
 
-        if ($this->checkAccess) {
-            call_user_func($this->checkAccess, $this->id, $model);
-        }
+        $this->runAccessControl([
+            'model' => $model,
+        ]);
 
         return $this->prepareProvider($model);
     }

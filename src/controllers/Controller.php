@@ -3,7 +3,7 @@
 namespace voskobovich\api\controllers;
 
 use voskobovich\api\actions\IndexAction;
-use voskobovich\api\filters\AccessActionControl;
+use voskobovich\api\filters\auth\QueryParamAuth;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\filters\Cors;
@@ -13,21 +13,14 @@ use yii\rest\ViewAction;
 /**
  * Class Controller.
  */
-class Controller extends AccessController
+class Controller extends \yii\rest\Controller
 {
     /**
-     * @var string the permission prefix name. This property must be set.
-     *             Full action name in access rules "api:user:index"
-     *             Example:
-     *             api:user - this is prefix for current controller
-     *             index - action name in your controller
-     *             More examples:
-     *             api:user:index
-     *             backend:user:index
-     *             frontend:user:index
-     *             admin:user:index
+     * The list of actions not needing token protection.
+     *
+     * @var array
      */
-    public $permissionPrefix;
+    public $unsecuredActions = [];
 
     /**
      * @var string the model class name. This property must be set.
@@ -80,6 +73,11 @@ class Controller extends AccessController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
+        $behaviors['authenticator']['optional'] = $this->unsecuredActions;
+        $behaviors['authenticator']['authMethods'][] = [
+            'class' => QueryParamAuth::className(),
+            'tokenParam' => 'token',
+        ];
         $behaviors['cors'] = [
             'class' => Cors::className(),
         ];
@@ -111,21 +109,10 @@ class Controller extends AccessController
             'class' => IndexAction::className(),
             'modelClass' => $this->modelClass,
             'formClass' => $this->indexFormClass,
-            'checkAccess' => function ($actionName) {
-                AccessActionControl::checkAccess("{$this->permissionPrefix}:index", [
-                    'actionName' => $actionName,
-                ]);
-            },
         ];
         $actions['view'] = [
             'class' => ViewAction::className(),
             'modelClass' => $this->modelClass,
-            'checkAccess' => function ($actionName, $model) {
-                AccessActionControl::checkAccess("{$this->permissionPrefix}:view", [
-                    'actionName' => $actionName,
-                    'model' => $model,
-                ]);
-            },
         ];
         $actions['options'] = [
             'class' => OptionsAction::className(),
