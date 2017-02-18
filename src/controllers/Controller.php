@@ -3,25 +3,16 @@
 namespace voskobovich\api\controllers;
 
 use voskobovich\api\actions\IndexAction;
-use voskobovich\api\filters\auth\QueryParamAuth;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
-use yii\filters\Cors;
 use yii\rest\OptionsAction;
 use yii\rest\ViewAction;
 
 /**
  * Class Controller.
  */
-class Controller extends \yii\rest\Controller
+class Controller extends BaseController
 {
-    /**
-     * The list of actions not needing token protection.
-     *
-     * @var array
-     */
-    public $unsecuredActions = [];
-
     /**
      * @var string the model class name. This property must be set.
      */
@@ -47,14 +38,6 @@ class Controller extends \yii\rest\Controller
     public $createScenario = Model::SCENARIO_DEFAULT;
 
     /**
-     * @var string|array the configuration for creating the serializer that formats the response data
-     */
-    public $serializer = [
-        'class' => 'tuyakhov\jsonapi\Serializer',
-        'pluralize' => false,
-    ];
-
-    /**
      * {@inheritdoc}
      */
     public function init()
@@ -63,26 +46,6 @@ class Controller extends \yii\rest\Controller
         if ($this->modelClass === null) {
             throw new InvalidConfigException('The "modelClass" property must be set.');
         }
-    }
-
-    /**
-     * Behaviors.
-     *
-     * @return array
-     */
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['authenticator']['optional'] = $this->unsecuredActions;
-        $behaviors['authenticator']['authMethods'][] = [
-            'class' => QueryParamAuth::className(),
-            'tokenParam' => 'token',
-        ];
-        $behaviors['cors'] = [
-            'class' => Cors::className(),
-        ];
-
-        return $behaviors;
     }
 
     /**
