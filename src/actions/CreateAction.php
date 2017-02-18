@@ -8,15 +8,13 @@ use yii\helpers\Url;
 use yii\rest\Action;
 use yii\web\ServerErrorHttpException;
 
-
 /**
- * Class CreateAction
- * @package voskobovich\api\actions
+ * Class CreateAction.
  */
 class CreateAction extends Action
 {
     /**
-     * @var string the scenario to be assigned to the new model before it is validated and saved.
+     * @var string the scenario to be assigned to the new model before it is validated and saved
      */
     public $scenario = Model::SCENARIO_DEFAULT;
 
@@ -27,8 +25,10 @@ class CreateAction extends Action
 
     /**
      * Creates a new model.
-     * @return \yii\db\ActiveRecordInterface the model newly created
+     *
      * @throws ServerErrorHttpException if there is any error when creating the model
+     *
+     * @return \yii\db\ActiveRecord the model newly created
      */
     public function run()
     {
@@ -37,9 +37,10 @@ class CreateAction extends Action
         }
 
         /* @var $model \yii\db\ActiveRecord */
-        $model = new $this->modelClass([
-            'scenario' => $this->scenario,
-        ]);
+        $model = Yii::createObject(
+            $this->modelClass,
+            ['scenario' => $this->scenario]
+        );
 
         $params = Yii::$app->getRequest()->getBodyParams();
         $model->load($params, '');

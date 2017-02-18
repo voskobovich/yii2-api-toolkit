@@ -9,16 +9,14 @@ use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\rest\Action;
 
-
 /**
- * Class RelationAction
- * @package voskobovich\api\actions
+ * Class RelationAction.
  */
 class RelationAction extends Action
 {
     /**
      * @var string class name of the form which will be handled by this action.
-     * This property must be set.
+     *             This property must be set.
      */
     public $formClass;
 
@@ -42,10 +40,12 @@ class RelationAction extends Action
 
     /**
      * @param $id
+     *
      * @return Component
      */
     public function run($id)
     {
+        /** @var \yii\db\ActiveRecord $model */
         $model = $this->findModel($id);
 
         if ($this->checkAccess) {
@@ -57,14 +57,18 @@ class RelationAction extends Action
 
     /**
      * Prepares the data provider that should return the requested collection of the models.
-     * @param $model
-     * @return array
+     *
+     * @param \yii\db\ActiveRecord $model
+     *
      * @throws InvalidConfigException
+     *
+     * @return mixed|RelationFormAbstract|ActiveDataProvider
      */
     protected function prepareProvider($model)
     {
         /* @var $form RelationFormAbstract */
-        $form = new $this->formClass;
+        $form = Yii::createObject($this->formClass);
+
         if (!$form instanceof RelationFormAbstract) {
             throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\api\forms\RelationFormAbstract"');
         }
@@ -81,7 +85,7 @@ class RelationAction extends Action
         }
 
         return new ActiveDataProvider([
-            'query' => $form->buildQuery($model)
+            'query' => $form->buildQuery($model),
         ]);
     }
 }

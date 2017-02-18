@@ -4,22 +4,19 @@ namespace voskobovich\api\actions;
 
 use voskobovich\api\forms\IndexFormAbstract;
 use Yii;
-use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
-use yii\db\ActiveRecord;
+use yii\db\ActiveRecordInterface;
 use yii\rest\Action;
 
-
 /**
- * Class IndexAction
- * @package voskobovich\api\actions
+ * Class IndexAction.
  */
 class IndexAction extends Action
 {
     /**
      * @var string class name of the form which will be handled by this action.
-     * This property must be set.
+     *             This property must be set.
      */
     public $formClass;
 
@@ -42,7 +39,7 @@ class IndexAction extends Action
     public $prepareProvider;
 
     /**
-     * @return Component
+     * @return array
      */
     public function run()
     {
@@ -51,16 +48,19 @@ class IndexAction extends Action
         }
 
         /** @var \yii\db\ActiveRecord $model */
-        $model = new $this->modelClass;
+        $model = Yii::createObject($this->modelClass);
 
         return $this->prepareProvider($model);
     }
 
     /**
      * Prepares the data provider that should return the requested collection of the models.
-     * @param ActiveRecord $model
-     * @return array
+     *
+     * @param ActiveRecordInterface $model
+     *
      * @throws InvalidConfigException
+     *
+     * @return mixed|IndexFormAbstract|ActiveDataProvider
      */
     protected function prepareProvider($model)
     {
@@ -82,8 +82,8 @@ class IndexAction extends Action
             return call_user_func($this->prepareProvider, $form, $model, $this);
         }
 
-        /* @var $modelClass \yii\db\BaseActiveRecord */
-        $model = new $this->modelClass;
+        /** @var \yii\db\ActiveRecord $model */
+        $model = Yii::createObject($this->modelClass);
 
         return new ActiveDataProvider([
             'query' => $form->buildQuery($model),

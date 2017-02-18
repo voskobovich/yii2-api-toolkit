@@ -6,16 +6,15 @@ use Yii;
 use yii\base\Object;
 use yii\web\UnauthorizedHttpException;
 
-
 /**
- * Class AccessActionControl
- * @package voskobovich\api\filters
+ * Class AccessActionControl.
  */
 class AccessActionControl extends Object
 {
     /**
      * @param $permName
      * @param $params
+     *
      * @throws UnauthorizedHttpException
      */
     public static function checkAccess($permName, $params)

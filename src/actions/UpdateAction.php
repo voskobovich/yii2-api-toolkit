@@ -8,23 +8,24 @@ use yii\db\ActiveRecord;
 use yii\rest\Action;
 use yii\web\ServerErrorHttpException;
 
-
 /**
- * Class UpdateAction
- * @package voskobovich\api\actions
+ * Class UpdateAction.
  */
 class UpdateAction extends Action
 {
     /**
-     * @var string the scenario to be assigned to the model before it is validated and updated.
+     * @var string the scenario to be assigned to the model before it is validated and updated
      */
     public $scenario = Model::SCENARIO_DEFAULT;
 
     /**
      * Updates an existing model.
-     * @param string $id the primary key of the model.
-     * @return \yii\db\ActiveRecordInterface the model being updated
+     *
+     * @param string $id the primary key of the model
+     *
      * @throws ServerErrorHttpException if there is any error when updating the model
+     *
+     * @return \yii\db\ActiveRecord the model being updated
      */
     public function run($id)
     {

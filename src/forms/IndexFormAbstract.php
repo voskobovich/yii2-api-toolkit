@@ -4,16 +4,16 @@ namespace voskobovich\api\forms;
 
 use yii\base\Model;
 
-
 /**
- * Class IndexFormAbstract
- * @package voskobovich\api\forms
+ * Class IndexFormAbstract.
  */
 abstract class IndexFormAbstract extends Model
 {
     /**
-     * Query building
+     * Query building.
+     *
      * @param \yii\db\ActiveRecord $model
+     *
      * @return \yii\db\ActiveQuery
      */
     abstract public function buildQuery($model);

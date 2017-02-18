@@ -3,24 +3,23 @@
 namespace voskobovich\api\controllers;
 
 use voskobovich\api\filters\auth\QueryParamAuth;
-use Yii;
 use yii\rest\Controller;
 
-
 /**
- * Class AccessController
- * @package voskobovich\api\controllers
+ * Class AccessController.
  */
 class AccessController extends Controller
 {
     /**
      * The list of actions not needing token protection.
+     *
      * @var array
      */
     public $unsecuredActions = [];
 
     /**
-     * Behaviors
+     * Behaviors.
+     *
      * @return array
      */
     public function behaviors()
@@ -29,8 +28,9 @@ class AccessController extends Controller
         $behaviors['authenticator']['optional'] = $this->unsecuredActions;
         $behaviors['authenticator']['authMethods'][] = [
             'class' => QueryParamAuth::className(),
-            'tokenParam' => 'token'
+            'tokenParam' => 'token',
         ];
+
         return $behaviors;
     }
 }

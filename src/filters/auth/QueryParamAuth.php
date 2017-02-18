@@ -2,17 +2,13 @@
 
 namespace voskobovich\api\filters\auth;
 
-use Yii;
-
-
 /**
- * Class QueryParamAuth
- * @package voskobovich\api\filters\auth
+ * Class QueryParamAuth.
  */
 class QueryParamAuth extends \yii\filters\auth\QueryParamAuth
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function authenticate($user, $request, $response)
     {
