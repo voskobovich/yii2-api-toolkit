@@ -23,8 +23,7 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "yiisoft/yii2": "~2.0.0",
-    "tuyakhov/yii2-json-api": "^0.0.11"
+    "yiisoft/yii2": "~2.0.0"
   },
   "require-dev": {
     "yiisoft/yii2-coding-standards": "~2.0.2",

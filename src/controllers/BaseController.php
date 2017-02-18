@@ -21,8 +21,8 @@ class BaseController extends Controller
      * @var string|array the configuration for creating the serializer that formats the response data
      */
     public $serializer = [
-        'class' => 'tuyakhov\jsonapi\Serializer',
-        'pluralize' => false,
+        'class' => 'yii\rest\Serializer',
+        'collectionEnvelope' => 'items',
     ];
 
     /**
