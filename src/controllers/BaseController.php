@@ -4,7 +4,6 @@ namespace voskobovich\api\controllers;
 
 use yii\rest\Controller;
 use voskobovich\api\filters\auth\QueryParamAuth;
-use yii\filters\Cors;
 
 /**
  * Class BaseController.
@@ -38,9 +37,6 @@ class BaseController extends Controller
         $behaviors['authenticator']['authMethods'][] = [
             'class' => QueryParamAuth::className(),
             'tokenParam' => 'token',
-        ];
-        $behaviors['cors'] = [
-            'class' => Cors::className(),
         ];
 
         return $behaviors;
