@@ -19,11 +19,6 @@ class Controller extends BaseController
     public $modelClass;
 
     /**
-     * @var string the form class name for Index action. This property must be set.
-     */
-    public $indexFormClass;
-
-    /**
      * @var string the scenario used for updating a model
      *
      * @see \yii\base\Model::scenarios()
@@ -71,7 +66,6 @@ class Controller extends BaseController
         $actions['index'] = [
             'class' => IndexAction::className(),
             'modelClass' => $this->modelClass,
-            'formClass' => $this->indexFormClass,
         ];
         $actions['view'] = [
             'class' => ViewAction::className(),
