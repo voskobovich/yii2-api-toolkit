@@ -4,6 +4,7 @@ namespace voskobovich\api\controllers;
 
 use yii\rest\Controller;
 use voskobovich\api\filters\auth\QueryParamAuth;
+use yii\web\Response;
 
 /**
  * Class BaseController.
@@ -33,6 +34,11 @@ class BaseController extends Controller
     public function behaviors()
     {
         $behaviors = parent::behaviors();
+
+        $behaviors['contentNegotiator']['formats'] = [
+            'application/json' => Response::FORMAT_JSON,
+        ];
+
         $behaviors['authenticator']['optional'] = $this->unsecuredActions;
         $behaviors['authenticator']['authMethods'][] = [
             'class' => QueryParamAuth::className(),
