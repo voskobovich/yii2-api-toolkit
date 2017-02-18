@@ -2,6 +2,7 @@
 
 namespace voskobovich\api\actions;
 
+use voskobovich\api\helpers\AccessHelper;
 use Yii;
 use yii\rest\Action;
 use yii\web\UnauthorizedHttpException;
@@ -23,19 +24,16 @@ abstract class BaseAction extends Action
         if (is_callable($this->checkAccess)) {
             call_user_func($this->checkAccess, $this->id);
         } elseif (!empty($this->controller)) {
-            $appId = Yii::$app->id;
+            $app = Yii::$app;
+            $permissionName = "{$app->id}:{$this->controller->id}:{$this->id}";
 
-            $allowAccess = Yii::$app->user->can(
-                "{$appId}:{$this->controller->id}:{$this->id}",
+            AccessHelper::check(
+                $permissionName,
                 array_merge(
-                    ['actionName' => $this->id],
+                    ['action' => $this],
                     $params
                 )
             );
-
-            if (!$allowAccess) {
-                throw new UnauthorizedHttpException('You are requesting with an invalid credential.');
-            }
         } else {
             throw new UnauthorizedHttpException('You are requesting with an invalid credential.');
         }
