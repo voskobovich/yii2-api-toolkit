@@ -2,8 +2,8 @@
 
 namespace voskobovich\api\controllers;
 
+use yii\filters\auth\QueryParamAuth;
 use yii\rest\Controller;
-use voskobovich\api\filters\auth\QueryParamAuth;
 use yii\web\Response;
 
 /**
