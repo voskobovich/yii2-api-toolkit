@@ -40,10 +40,7 @@ class BaseController extends Controller
         ];
 
         $behaviors['authenticator']['optional'] = $this->unsecuredActions;
-        $behaviors['authenticator']['authMethods'][] = [
-            'class' => QueryParamAuth::className(),
-            'tokenParam' => 'token',
-        ];
+        $behaviors['authenticator']['authMethods'][] = QueryParamAuth::className();
 
         return $behaviors;
     }
