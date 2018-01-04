@@ -26,6 +26,8 @@ class CreateAction extends BaseAction
     /**
      * Creates a new model.
      *
+     * @throws \yii\base\InvalidParamException
+     * @throws \yii\base\InvalidConfigException
      * @throws ServerErrorHttpException  if there is any error when creating the model
      * @throws UnauthorizedHttpException
      *

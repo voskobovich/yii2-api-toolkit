@@ -34,6 +34,7 @@ class Controller extends BaseController
 
     /**
      * {@inheritdoc}
+     * @throws \yii\base\InvalidConfigException
      */
     public function init()
     {

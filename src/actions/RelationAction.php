@@ -4,7 +4,6 @@ namespace voskobovich\api\actions;
 
 use voskobovich\api\forms\RelationFormAbstract;
 use Yii;
-use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\web\UnauthorizedHttpException;
@@ -41,9 +40,11 @@ class RelationAction extends BaseAction
     /**
      * @param $id
      *
+     * @return RelationFormAbstract|ActiveDataProvider
+     * @throws \yii\base\InvalidParamException
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\web\NotFoundHttpException
      * @throws UnauthorizedHttpException
-     *
-     * @return Component
      */
     public function run($id)
     {
@@ -62,6 +63,7 @@ class RelationAction extends BaseAction
      *
      * @param \yii\db\ActiveRecord $model
      *
+     * @throws \yii\base\InvalidParamException
      * @throws InvalidConfigException
      *
      * @return mixed|RelationFormAbstract|ActiveDataProvider
@@ -83,7 +85,7 @@ class RelationAction extends BaseAction
         }
 
         if ($this->prepareProvider !== null) {
-            return call_user_func($this->prepareProvider, $form, $model, $this);
+            return \call_user_func($this->prepareProvider, $form, $model, $this);
         }
 
         return new ActiveDataProvider([

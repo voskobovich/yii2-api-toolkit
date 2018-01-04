@@ -23,6 +23,9 @@ class UpdateAction extends BaseAction
      *
      * @param string $id the primary key of the model
      *
+     * @throws \yii\web\NotFoundHttpException
+     * @throws \yii\base\InvalidParamException
+     * @throws \yii\base\InvalidConfigException
      * @throws ServerErrorHttpException  if there is any error when updating the model
      * @throws UnauthorizedHttpException
      *

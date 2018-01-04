@@ -39,9 +39,11 @@ class IndexAction extends BaseAction
     public $prepareProvider;
 
     /**
+     * @throws \yii\base\InvalidParamException
+     * @throws \yii\base\InvalidConfigException
      * @throws UnauthorizedHttpException
      *
-     * @return array
+     * @return IndexFormAbstract|ActiveDataProvider
      */
     public function run()
     {
@@ -58,9 +60,10 @@ class IndexAction extends BaseAction
      *
      * @param ActiveRecordInterface $model
      *
+     * @throws \yii\base\InvalidParamException
      * @throws InvalidConfigException
      *
-     * @return mixed|IndexFormAbstract|ActiveDataProvider
+     * @return IndexFormAbstract|ActiveDataProvider
      */
     protected function prepareProvider($model)
     {
@@ -79,7 +82,7 @@ class IndexAction extends BaseAction
         }
 
         if ($this->prepareProvider !== null) {
-            return call_user_func($this->prepareProvider, $form, $model, $this);
+            return \call_user_func($this->prepareProvider, $form, $model, $this);
         }
 
         /** @var \yii\db\ActiveRecord $model */

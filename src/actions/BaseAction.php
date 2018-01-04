@@ -21,9 +21,9 @@ abstract class BaseAction extends Action
      */
     public function runAccessControl($params = [])
     {
-        if (is_callable($this->checkAccess)) {
-            call_user_func($this->checkAccess, $this->id);
-        } elseif (!empty($this->controller)) {
+        if (\is_callable($this->checkAccess)) {
+            \call_user_func($this->checkAccess, $this->id);
+        } elseif (null !== $this->controller) {
             $app = Yii::$app;
             $permissionName = "{$app->id}:{$this->controller->id}:{$this->id}";
 

@@ -5,6 +5,7 @@ namespace voskobovich\api\controllers;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\Controller;
 use yii\web\Response;
+use yii\rest\Serializer;
 
 /**
  * Class BaseController.
@@ -22,7 +23,7 @@ class BaseController extends Controller
      * @var string|array the configuration for creating the serializer that formats the response data
      */
     public $serializer = [
-        'class' => 'yii\rest\Serializer',
+        'class' => Serializer::class,
         'collectionEnvelope' => 'items',
     ];
 
@@ -40,7 +41,10 @@ class BaseController extends Controller
         ];
 
         $behaviors['authenticator']['optional'] = $this->unsecuredActions;
-        $behaviors['authenticator']['authMethods'][] = QueryParamAuth::className();
+        $behaviors['authenticator']['authMethods']['queryParam'] = [
+            'class' => QueryParamAuth::className(),
+            'tokenParam' => 'token',
+        ];
 
         return $behaviors;
     }
