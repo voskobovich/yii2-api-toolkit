@@ -34,9 +34,7 @@
       "voskobovich\\api\\controllers\\": "src/controllers",
       "voskobovich\\api\\actions\\": "src/actions",
       "voskobovich\\api\\forms\\": "src/forms",
-      "voskobovich\\api\\helpers\\": "src/helpers",
-      "voskobovich\\api\\filters\\": "src/filters",
-      "voskobovich\\api\\filters\\auth\\": "src/filters/auth"
+      "voskobovich\\api\\helpers\\": "src/helpers"
     }
   }
 }
