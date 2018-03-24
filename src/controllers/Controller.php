@@ -39,7 +39,7 @@ class Controller extends BaseController
     public function init()
     {
         parent::init();
-        if ($this->modelClass === null) {
+        if (null === $this->modelClass) {
             throw new InvalidConfigException('The "modelClass" property must be set.');
         }
     }

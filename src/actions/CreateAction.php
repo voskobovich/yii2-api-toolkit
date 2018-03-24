@@ -26,6 +26,7 @@ class CreateAction extends BaseAction
     /**
      * Creates a new model.
      *
+     * @throws \yii\base\InvalidArgumentException
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\InvalidConfigException
      * @throws ServerErrorHttpException  if there is any error when creating the model
@@ -47,18 +48,18 @@ class CreateAction extends BaseAction
         $model->load($params, '');
 
         $validate = Yii::$app->request->get('validate', false);
-        if (!$validate) {
+        if (false === $validate) {
             if ($model->save()) {
                 $response = Yii::$app->getResponse();
                 $response->setStatusCode(201);
-                $id = implode(',', array_values($model->getPrimaryKey(true)));
+                $id = \implode(',', \array_values($model->getPrimaryKey(true)));
                 $response->getHeaders()->set('Location', Url::toRoute([$this->viewAction, 'id' => $id], true));
-            } elseif (!$model->hasErrors()) {
+            } elseif (false === $model->hasErrors()) {
                 throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
             }
         } else {
-            $parts = explode(',', $validate);
-            $attributeNames = array_intersect($parts, $model->attributes());
+            $parts = \explode(',', $validate);
+            $attributeNames = \array_intersect($parts, $model->attributes());
             if (empty($attributeNames[0])) {
                 $attributeNames = null;
             }

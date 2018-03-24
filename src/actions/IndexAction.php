@@ -60,6 +60,7 @@ class IndexAction extends BaseAction
      *
      * @param ActiveRecordInterface $model
      *
+     * @throws \yii\base\InvalidArgumentException
      * @throws \yii\base\InvalidParamException
      * @throws InvalidConfigException
      *
@@ -70,23 +71,25 @@ class IndexAction extends BaseAction
         /* @var $form IndexFormAbstract */
         $form = new $this->formClass();
 
-        if (!$form instanceof IndexFormAbstract) {
-            throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\api\forms\IndexFormAbstract"');
+        if (false === $form instanceof IndexFormAbstract) {
+            throw new InvalidConfigException(
+                'Property "formClass" must be implemented "voskobovich\api\forms\IndexFormAbstract"'
+            );
         }
 
         $params = Yii::$app->getRequest()->get();
         $form->load($params, '');
 
-        if (!$form->validate()) {
+        if (false === $form->validate()) {
             return $form;
         }
 
-        if ($this->prepareProvider !== null) {
+        if (null !== $this->prepareProvider) {
             return \call_user_func($this->prepareProvider, $form, $model, $this);
         }
 
         /** @var \yii\db\ActiveRecord $model */
-        $model = Yii::createObject($this->modelClass);
+        $model = new $this->modelClass;
 
         return new ActiveDataProvider([
             'query' => $form->buildQuery($model),

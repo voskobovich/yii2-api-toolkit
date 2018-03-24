@@ -5,7 +5,6 @@ namespace voskobovich\api\controllers;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\Controller;
 use yii\web\Response;
-use yii\rest\Serializer;
 
 /**
  * Class BaseController.
@@ -23,7 +22,7 @@ class BaseController extends Controller
      * @var string|array the configuration for creating the serializer that formats the response data
      */
     public $serializer = [
-        'class' => Serializer::class,
+        'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
     ];
 

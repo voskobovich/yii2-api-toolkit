@@ -19,7 +19,7 @@ abstract class BaseAction extends Action
      *
      * @throws UnauthorizedHttpException
      */
-    public function runAccessControl($params = [])
+    public function runAccessControl(array $params = [])
     {
         if (\is_callable($this->checkAccess)) {
             \call_user_func($this->checkAccess, $this->id);
@@ -29,7 +29,7 @@ abstract class BaseAction extends Action
 
             AccessHelper::check(
                 $permissionName,
-                array_merge(
+                \array_merge(
                     ['action' => $this],
                     $params
                 )

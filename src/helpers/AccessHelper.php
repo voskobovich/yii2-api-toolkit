@@ -18,7 +18,7 @@ class AccessHelper
      *
      * @throws UnauthorizedHttpException
      */
-    public static function check($permissionName, $params = [])
+    public static function check($permissionName, array $params = [])
     {
         if (false === Yii::$app->user->can($permissionName, $params)) {
             throw new UnauthorizedHttpException('You are requesting with an invalid credential.');

@@ -23,6 +23,7 @@ class UpdateAction extends BaseAction
      *
      * @param string $id the primary key of the model
      *
+     * @throws \yii\base\InvalidArgumentException
      * @throws \yii\web\NotFoundHttpException
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\InvalidConfigException
@@ -46,13 +47,13 @@ class UpdateAction extends BaseAction
         $model->load($params, '');
 
         $validate = Yii::$app->request->get('validate', false);
-        if (!$validate) {
-            if ($model->save() === false && !$model->hasErrors()) {
+        if (false === $validate) {
+            if ($model->save() === false && false === $model->hasErrors()) {
                 throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
             }
         } else {
-            $parts = explode(',', $validate);
-            $attributeNames = array_intersect($parts, $model->attributes());
+            $parts = \explode(',', $validate);
+            $attributeNames = \array_intersect($parts, $model->attributes());
             if (empty($attributeNames[0])) {
                 $attributeNames = null;
             }

@@ -63,6 +63,7 @@ class RelationAction extends BaseAction
      *
      * @param \yii\db\ActiveRecord $model
      *
+     * @throws \yii\base\InvalidArgumentException
      * @throws \yii\base\InvalidParamException
      * @throws InvalidConfigException
      *
@@ -73,18 +74,20 @@ class RelationAction extends BaseAction
         /* @var $form RelationFormAbstract */
         $form = Yii::createObject($this->formClass);
 
-        if (!$form instanceof RelationFormAbstract) {
-            throw new InvalidConfigException('Property "formClass" must be implemented "voskobovich\api\forms\RelationFormAbstract"');
+        if (false === $form instanceof RelationFormAbstract) {
+            throw new InvalidConfigException(
+                'Property "formClass" must be implemented "voskobovich\api\forms\RelationFormAbstract"'
+            );
         }
 
         $params = Yii::$app->getRequest()->get();
         $form->load($params, '');
 
-        if (!$form->validate()) {
+        if (false === $form->validate()) {
             return $form;
         }
 
-        if ($this->prepareProvider !== null) {
+        if (null !== $this->prepareProvider) {
             return \call_user_func($this->prepareProvider, $form, $model, $this);
         }
 
