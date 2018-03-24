@@ -12,7 +12,7 @@ abstract class RelationFormAbstract extends Model
     /**
      * Query building.
      *
-     * @param \yii\db\ActiveRecord $model
+     * @param \yii\db\ActiveRecordInterface $model
      *
      * @return \yii\db\ActiveQuery
      */

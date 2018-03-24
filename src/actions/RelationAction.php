@@ -61,7 +61,7 @@ class RelationAction extends BaseAction
     /**
      * Prepares the data provider that should return the requested collection of the models.
      *
-     * @param \yii\db\ActiveRecord $model
+     * @param \yii\db\ActiveRecordInterface $model
      *
      * @throws \yii\base\InvalidArgumentException
      * @throws \yii\base\InvalidParamException

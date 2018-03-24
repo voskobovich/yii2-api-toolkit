@@ -88,9 +88,6 @@ class IndexAction extends BaseAction
             return \call_user_func($this->prepareProvider, $form, $model, $this);
         }
 
-        /** @var \yii\db\ActiveRecord $model */
-        $model = new $this->modelClass;
-
         return new ActiveDataProvider([
             'query' => $form->buildQuery($model),
         ]);
